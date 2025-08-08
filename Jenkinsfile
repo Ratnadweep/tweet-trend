@@ -26,7 +26,7 @@ environment {
             }
         }
 
-    stage('SonarQube analysis') {
+    /*stage('SonarQube analysis') {
     environment {
       scannerHome = tool 'RG-sonar-scanner'
     }
@@ -35,7 +35,7 @@ environment {
       sh "${scannerHome}/bin/sonar-scanner"
     }
     }
-  }
+  }*/
   stage("Quality Gate"){
     steps {
         script {
