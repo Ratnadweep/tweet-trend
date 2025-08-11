@@ -106,16 +106,21 @@ environment {
          }
        }
      }*/
-     stage("Deploy Container on EC2") {
+             stage("Deploy Container on EC2") {
             steps {
                 script {
-                    echo '<--------------- Running Container on Slave Node --------------->'
+                    echo '<--------------- Pulling and Running Latest Image from Artifactory --------------->'
+                    docker.withRegistry(registry, 'artifact-cred') {
+                        sh "docker pull ${imageName}:${version}"
+                    }
                     sh """
+                        docker rm -f ttrend || true
                         docker run -dt --name ttrend -p 8000:8000 ${imageName}:${version}
                     """
-                    echo '<--------------- Container Started --------------->'
+                    echo '<--------------- Container Started from Latest Image --------------->'
                 }
             }
-        }  
+        }
+ 
 }
 }
