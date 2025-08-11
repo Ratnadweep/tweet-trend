@@ -97,7 +97,7 @@ environment {
         }
     }
 
-stage(" Deploy ") {
+/*stage(" Deploy ") {
        steps {
          script {
             echo '<--------------- Helm Deploy Started --------------->'
@@ -105,6 +105,17 @@ stage(" Deploy ") {
             echo '<--------------- Helm deploy Ends --------------->'
          }
        }
-     }  
+     }*/
+     stage("Deploy Container on EC2") {
+            steps {
+                script {
+                    echo '<--------------- Running Container on Slave Node --------------->'
+                    sh """
+                        docker run -dt --name ttrend -p 8000:8000 ${imageName}:${version}
+                    """
+                    echo '<--------------- Container Started --------------->'
+                }
+            }
+        }  
 }
 }
